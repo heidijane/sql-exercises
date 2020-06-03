@@ -52,6 +52,8 @@ SELECT g.[Label] AS 'Genre', COUNT(s.Id) AS 'Song Count' FROM Genre g JOIN Song 
 
 --Write a SELECT query that lists the Artists that have put out records on more than one record label. Hint: When using GROUP BY instead of using a WHERE clause, use the HAVING keyword
 SELECT ArtistName, COUNT([Label]) AS 'Label Number' FROM (SELECT Artist.ArtistName, Album.[Label] FROM Album JOIN Artist ON Artist.Id = Album.ArtistId GROUP BY Artist.ArtistName, Album.[Label]) AS query GROUP BY ArtistName HAVING COUNT([Label]) > 1;
+--This version is a bit more concise
+SELECT ArtistName, COUNT(DISTINCT Album.[Label]) AS LabelCount FROM Artist JOIN Album ON Album.ArtistId = Artist.Id GROUP BY Artist.ArtistName HAVING COUNT(DISTINCT Album.[Label]) > 1;
 
 --Using MAX() function, write a select statement to find the album with the longest duration. The result should display the album title and the duration.
 SELECT Title, AlbumLength FROM Album WHERE AlbumLength = (SELECT MAX(Album.AlbumLength) FROM Album);
