@@ -107,13 +107,11 @@ JOIN Emotion ON Emotion.Id = query.EmotionId
 WHERE Emotion.Name = 'Sadness';
 
 --16. How many poems are not associated with any emotion?
-SELECT Poem.Id, COUNT(PoemEmotion.Id) AS NumOfEmotions 
-FROM Poem 
-LEFT JOIN PoemEmotion ON Poem.Id = PoemEmotion.PoemId 
-WHERE PoemEmotion.Id = NULL
-GROUP BY Poem.Id
-ORDER BY NumOfEmotions;
---From what I can tell, it looks like all poems have at least one emotion
+SELECT COUNT(Poem.Id) 
+AS 'Poems with no associated emotions' 
+FROM Poem LEFT JOIN PoemEmotion 
+ON Poem.Id = PoemEmotion.PoemId 
+WHERE PoemEmotion.Id IS NULL
 
 --17. Which emotion is associated with the least number of poems?
 SELECT Emotion.Name 
